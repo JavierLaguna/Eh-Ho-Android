@@ -24,4 +24,5 @@ object TopicsRepo {
     fun getDummyTopics(count: Int = 10) =
         (0..count).map { Topic(title = "Topic $it", content = "Content $it") }
 
+    fun getTopic(topicId: String): Topic? = topics.find { it.id == topicId }
 }
