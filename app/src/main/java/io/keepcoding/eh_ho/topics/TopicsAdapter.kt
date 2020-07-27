@@ -1,9 +1,11 @@
-package io.keepcoding.eh_ho
+package io.keepcoding.eh_ho.topics
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import io.keepcoding.eh_ho.R
+import io.keepcoding.eh_ho.Topic
+import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.item_topic.view.*
 
 class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)?) :
@@ -26,7 +28,8 @@ class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)?) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopicHolder {
         val context = parent.context
         // AttachToRoot -> reemplaza el parent con la vista que se va a inflar
-        val view = LayoutInflater.from(context).inflate(R.layout.item_topic, parent, false)
+//        val view = LayoutInflater.from(context).inflate(R.layout.item_topic, parent, false)
+        val view = parent.inflate(R.layout.item_topic)
         return TopicHolder(view)
     }
 
