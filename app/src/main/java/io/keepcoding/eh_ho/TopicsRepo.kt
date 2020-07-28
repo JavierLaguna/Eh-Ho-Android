@@ -3,12 +3,12 @@ package io.keepcoding.eh_ho
 // Singleton
 object TopicsRepo {
     val topics: MutableList<Topic> = mutableListOf()
-        get() {
-            if (field.isEmpty()) {
-                field.addAll(getDummyTopics())
-            }
-            return field
-        }
+//        get() {
+//            if (field.isEmpty()) {
+//                field.addAll(getDummyTopics())
+//            }
+//            return field
+//        }
 
 //    fun getDummyTopics() {
 //        for (i in 0..10) {
@@ -21,8 +21,12 @@ object TopicsRepo {
 //        return (0..count).map { Topic(title = "Topic $it", content = "Content $it") }
 //    }
 
-    fun getDummyTopics(count: Int = 10) =
+    private fun getDummyTopics(count: Int = 10) =
         (0..count).map { Topic(title = "Topic $it", content = "Content $it") }
 
     fun getTopic(topicId: String): Topic? = topics.find { it.id == topicId }
+
+    fun addTopic(title: String, content: String) {
+        topics.add(Topic(title = title, content = content))
+    }
 }

@@ -7,6 +7,7 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.Topic
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.item_topic.view.*
+import java.util.*
 
 class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)?) :
     RecyclerView.Adapter<TopicsAdapter.TopicHolder>() {
@@ -54,10 +55,42 @@ class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)?) :
         var topic: Topic? = null
             set(value) {
                 field = value
-//                itemView.findViewById<TextView>(R.id.label_topic).text = field?.title
-                itemView.labelTopic.text = field?.title
-
                 itemView.tag = field
+
+//                itemView.findViewById<TextView>(R.id.label_topic).text = field?.title
+//                itemView.labelTitle.text = field?.title
+//                itemView.labelPosts.text = field?.posts.toString()
+//                itemView.labelViews.text = field?.views.toString()
+//                setTimeOffset(field?.getTimeOffset())
+
+                field?.let { topic ->
+                    itemView.labelTitle.text = topic.title
+                    itemView.labelPosts.text = topic.posts.toString()
+                    itemView.labelViews.text = topic.views.toString()
+                    setTimeOffset(topic.getTimeOffset())
+                }
             }
+
+        private fun setTimeOffset(timeOffset: Topic.TimeOffset) {
+//            this.itemView.context.resources.getQuantityString()
+
+            val quantityString = when (timeOffset.unit) {
+                Calendar.YEAR -> R.plurals.years
+                Calendar.MONTH -> R.plurals.months
+                Calendar.DAY_OF_MONTH -> R.plurals.days
+                Calendar.HOUR -> R.plurals.hours
+                else -> R.plurals.minutes
+            }
+
+            if (timeOffset.amount == 0) {
+                itemView.labelDate.text = itemView.context.getString(R.string.minutes_zero)
+            } else {
+                itemView.labelDate.text = itemView.context.resources.getQuantityString(
+                    quantityString,
+                    timeOffset.amount,
+                    timeOffset.amount
+                )
+            }
+        }
     }
 }
