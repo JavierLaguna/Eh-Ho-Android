@@ -1,5 +1,6 @@
 package io.keepcoding.eh_ho
 
+import io.keepcoding.eh_ho.data.Topic
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.lang.IllegalArgumentException

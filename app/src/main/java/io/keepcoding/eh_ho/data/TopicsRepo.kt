@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho
+package io.keepcoding.eh_ho.data
 
 // Singleton
 object TopicsRepo {
@@ -22,11 +22,21 @@ object TopicsRepo {
 //    }
 
     private fun getDummyTopics(count: Int = 10) =
-        (0..count).map { Topic(title = "Topic $it", content = "Content $it") }
+        (0..count).map {
+            Topic(
+                title = "Topic $it",
+                content = "Content $it"
+            )
+        }
 
     fun getTopic(topicId: String): Topic? = topics.find { it.id == topicId }
 
     fun addTopic(title: String, content: String) {
-        topics.add(Topic(title = title, content = content))
+        topics.add(
+            Topic(
+                title = title,
+                content = content
+            )
+        )
     }
 }

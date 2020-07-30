@@ -1,4 +1,4 @@
-package io.keepcoding.eh_ho
+package io.keepcoding.eh_ho.data
 
 import java.util.*
 
@@ -30,19 +30,34 @@ data class Topic(
         val diff = current - this.date.time
 
         val years = diff / YEAR_MILLIS
-        if (years > 0) return TimeOffset(years.toInt(), Calendar.YEAR)
+        if (years > 0) return TimeOffset(
+            years.toInt(),
+            Calendar.YEAR
+        )
 
         val months = diff / MONTH_MILLIS
-        if (months > 0) return TimeOffset(months.toInt(), Calendar.MONTH)
+        if (months > 0) return TimeOffset(
+            months.toInt(),
+            Calendar.MONTH
+        )
 
         val days = diff / DAY_MILLIS
-        if (days > 0) return TimeOffset(days.toInt(), Calendar.DAY_OF_MONTH)
+        if (days > 0) return TimeOffset(
+            days.toInt(),
+            Calendar.DAY_OF_MONTH
+        )
 
         val hours = diff / HOUR_MILLIS
-        if (hours > 0) return TimeOffset(hours.toInt(), Calendar.HOUR)
+        if (hours > 0) return TimeOffset(
+            hours.toInt(),
+            Calendar.HOUR
+        )
 
         val minutes = diff / MINUTES_MILLIS
-        if (minutes > 0) return TimeOffset(minutes.toInt(), Calendar.MINUTE)
+        if (minutes > 0) return TimeOffset(
+            minutes.toInt(),
+            Calendar.MINUTE
+        )
 
         return TimeOffset(0, Calendar.MINUTE)
     }

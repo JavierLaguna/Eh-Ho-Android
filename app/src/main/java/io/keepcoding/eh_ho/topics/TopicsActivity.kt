@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.keepcoding.eh_ho.*
+import io.keepcoding.eh_ho.data.Topic
+import io.keepcoding.eh_ho.data.TopicsRepo
+import io.keepcoding.eh_ho.data.UserRepo
+import io.keepcoding.eh_ho.login.LoginActivity
 
 const val TRANSACTION_CREATE_TOPIC = "create_topic"
 
@@ -29,7 +33,7 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
 
         if (isFirstTimeCreated(savedInstanceState)) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, TopicsFragment())
+                .add(R.id.fragmentContainer, TopicsFragment())
                 .commit()
         }
     }
@@ -43,13 +47,21 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
     // TopicsInteractionListener
     override fun onCreateTopic() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, CreateTopicFragment())
+            .replace(R.id.fragmentContainer, CreateTopicFragment())
             .addToBackStack(TRANSACTION_CREATE_TOPIC)
             .commit()
     }
 
     override fun onShowPosts(topic: Topic) {
         goToPosts(topic)
+    }
+
+    override fun onLogout() {
+        UserRepo.logout(applicationContext)
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish() // Esta actividad se destruye y no se queda en el backstack de actividades
     }
 
     // CreateTopicInteractionListener

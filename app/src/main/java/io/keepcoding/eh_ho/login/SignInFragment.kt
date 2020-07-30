@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.keepcoding.eh_ho.R
+import io.keepcoding.eh_ho.data.SignInModel
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import java.lang.IllegalArgumentException
@@ -42,12 +43,17 @@ class SignInFragment : Fragment() {
         }
 
         buttonLogin.setOnClickListener {
-            signInInteractionListener?.onSignIn()
+            val signInModel =
+                SignInModel(
+                    inputUsername.text.toString(),
+                    inputPassword.text.toString()
+                )
+            signInInteractionListener?.onSignIn(signInModel)
         }
     }
 
     interface SignInInteractionListener {
         fun onGoToSignUp()
-        fun onSignIn()
+        fun onSignIn(signInModel: SignInModel)
     }
 }

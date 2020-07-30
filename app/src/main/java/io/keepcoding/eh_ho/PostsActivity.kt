@@ -2,6 +2,7 @@ package io.keepcoding.eh_ho
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import io.keepcoding.eh_ho.data.TopicsRepo
 import kotlinx.android.synthetic.main.activity_posts.*
 
 const val EXTRA_TOPIC_ID = "TOPIC_ID"
