@@ -1,15 +1,47 @@
 package io.keepcoding.eh_ho.data
 
+import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
 data class Topic(
     val id: String = UUID.randomUUID().toString(),
-    val title: String,
-    val content: String,
+    val title: String = "",
+//    val content: String,
     val date: Date = Date(),
     val posts: Int = 0,
     val views: Int = 0
 ) {
+
+    // Los métodos son estáticos
+    companion object {
+        fun parseTopicsList(response: JSONObject): List<Topic> {
+            val objectList = response.getJSONObject("topic_list")
+                .getJSONArray("topics")
+
+            val topics = mutableListOf<Topic>()
+            for (i in 0 until objectList.length()) {
+                topics.add(parseTopic(objectList.getJSONObject(i)))
+            }
+
+            return topics
+        }
+
+        fun parseTopic(jsonObject: JSONObject): Topic {
+            val date = jsonObject.getString("created_at")
+                .replace("Z", "+0000")
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
+            val dateFormatted = dateFormat.parse(date) ?: Date()
+
+            return Topic(
+                id = jsonObject.getInt("id").toString(),
+                title = jsonObject.getString("title"),
+                date = dateFormatted,
+                posts = jsonObject.getInt("posts_count"),
+                views = jsonObject.getInt("views")
+            )
+        }
+    }
 
     // L para hacerlo de tipo Long
     private val MINUTES_MILLIS = 1000L * 60

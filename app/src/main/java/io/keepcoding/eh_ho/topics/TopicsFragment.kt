@@ -17,6 +17,13 @@ class TopicsFragment : Fragment() {
 
     var topicsInteractionListener: TopicsInteractionListener? = null
 
+    private val topicsAdapter: TopicsAdapter by lazy {
+        val adapter = TopicsAdapter {
+            topicsInteractionListener?.onShowPosts(it)
+        }
+        adapter
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -40,6 +47,34 @@ class TopicsFragment : Fragment() {
         return container?.inflate(R.layout.fragment_topics)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        buttonCreate.setOnClickListener {
+            topicsInteractionListener?.onCreateTopic()
+        }
+
+//        val adapter = TopicsAdapter {
+////            goToPosts(it)
+//            topicsInteractionListener?.onShowPosts(it)
+//        }
+
+//        adapter.setTopics(TopicsRepo.topics)
+
+        topicsAdapter.setTopics(TopicsRepo.topics)
+
+        listTopics.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        listTopics.adapter = topicsAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        loadTopics()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_topics, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -52,23 +87,22 @@ class TopicsFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onDetach() {
+        super.onDetach()
 
-        buttonCreate.setOnClickListener {
-            topicsInteractionListener?.onCreateTopic()
+        topicsInteractionListener = null
+    }
+
+    private fun loadTopics() {
+        context?.let {
+            TopicsRepo.getTopics(it.applicationContext, {
+//                (listTopics.adapter as TopicsAdapter).setTopics(it)
+
+                topicsAdapter.setTopics(it)
+            }, { error ->
+                // TODO: Manejo de errores
+            })
         }
-
-        val adapter = TopicsAdapter {
-//            goToPosts(it)
-            topicsInteractionListener?.onShowPosts(it)
-        }
-        adapter.setTopics(TopicsRepo.topics)
-
-        listTopics.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        listTopics.adapter = adapter
     }
 
     interface TopicsInteractionListener {

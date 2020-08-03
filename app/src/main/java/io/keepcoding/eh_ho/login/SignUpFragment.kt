@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.keepcoding.eh_ho.R
+import io.keepcoding.eh_ho.data.SignUpModel
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import java.lang.IllegalArgumentException
@@ -37,7 +38,12 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         buttonSignUp.setOnClickListener {
-            signUpInteractionListener?.onSignUp()
+            val signUpModel = SignUpModel(
+                inputUsername.text.toString(),
+                inputEmail.text.toString(),
+                inputPassword.text.toString()
+            )
+            signUpInteractionListener?.onSignUp(signUpModel)
         }
 
         labelCreateAccount.setOnClickListener {
@@ -47,6 +53,6 @@ class SignUpFragment : Fragment() {
 
     interface SignUpInteractionListener {
         fun onGoToSignIn()
-        fun onSignUp()
+        fun onSignUp(signUpModel: SignUpModel)
     }
 }

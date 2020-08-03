@@ -4,7 +4,6 @@ import android.content.Context
 import com.android.volley.NetworkError
 import com.android.volley.Request
 import com.android.volley.ServerError
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import io.keepcoding.eh_ho.R
 
@@ -58,6 +57,46 @@ object UserRepo {
         ApiRequestQueue.getReuestQueue(context).add(request)
 
         // 3. Permisos de acceso a internet en el AndroidManifest.ml
+    }
+
+    fun signUp(
+        context: Context, signUpModel: SignUpModel,
+        success: (SignUpModel) -> Unit,
+        error: (RequestError) -> Unit
+    ) {
+        val request = PostRequest(
+            Request.Method.POST,
+            ApiRouters.signUp(),
+            signUpModel.toJson(),
+            null,
+            { response ->
+                val successStatus = response?.getBoolean("success") ?: false
+
+                if (successStatus) {
+                    success(signUpModel)
+                } else {
+                    error(RequestError(message = response?.getString("message")))
+                }
+            },
+            { e ->
+                e.printStackTrace()
+
+                val errorObject = if (e is NetworkError) {
+                    RequestError(e, messageResId = R.string.error_no_internet)
+                } else {
+                    RequestError(e)
+                }
+
+                error(errorObject)
+            }
+        )
+
+        ApiRequestQueue.getReuestQueue(context).add(request)
+    }
+
+    fun getUsername(context: Context): String? {
+        val preferences = context.getSharedPreferences(PREFERENCES_SESSION, Context.MODE_PRIVATE)
+        return preferences.getString(PREFERENCES_USERNAME, null)
     }
 
     private fun saveSession(context: Context, username: String) {

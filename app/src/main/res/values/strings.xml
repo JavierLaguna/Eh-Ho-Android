@@ -43,5 +43,8 @@
     <string name="error_not_registered">User not registered</string>
     <string name="error_no_internet">No internet connection</string>
     <string name="error_default">Something bad happened</string>
+    <string name="message_sign_up">Please check your email to finish process</string>
+    <string name="error_duplicated_topic">Title has been already used</string>
+    <string name="label_creating_topic">Creating topic</string>
 
 </resources>
