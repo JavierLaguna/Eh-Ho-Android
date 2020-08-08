@@ -13,11 +13,10 @@ class PostsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_posts)
 
         val topicId = intent.getStringExtra(EXTRA_TOPIC_ID) ?: ""
-        val topic = TopicsRepo.getTopic(topicId)
-
-//        labelTitle.text = topic?.title
-        topic?.let {
-            labelTitle.text = it.title
-        }
+//        val topic = TopicsRepo.getTopic(topicId)
+//
+//        topic?.let {
+//            labelTitle.text = it.title
+//        }
     }
 }

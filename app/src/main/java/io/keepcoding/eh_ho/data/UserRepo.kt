@@ -18,26 +18,19 @@ object UserRepo {
         success: (SignInModel) -> Unit,
         error: (RequestError) -> Unit
     ) {
-
-        // !. Crear petición
         val request = JsonObjectRequest(
             Request.Method.GET,
-//            "https://mdiscourse.keepcoding.io/users/${signInModel.username}.json",
             ApiRouters.signIn(signInModel.username),
             null,
             { response ->
-                // 5. Notificar que la petición fie exitosa
                 success(signInModel)
-                // 6. Guardar la sesión
                 saveSession(
                     context,
                     signInModel.username
                 )
             },
             { e ->
-                // 5.1 Procesar ese error
                 e.printStackTrace()
-//                error(e)
 
                 val errorObject = if (e is ServerError && e.networkResponse.statusCode == 404) {
                     RequestError(e, messageResId = R.string.error_not_registered)
@@ -51,12 +44,7 @@ object UserRepo {
             }
         )
 
-        // 2. Encolar la petición
-//        val requestQueue = Volley.newRequestQueue(context)
-//        requestQueue.add(request)
         ApiRequestQueue.getReuestQueue(context).add(request)
-
-        // 3. Permisos de acceso a internet en el AndroidManifest.ml
     }
 
     fun signUp(
@@ -68,7 +56,6 @@ object UserRepo {
             Request.Method.POST,
             ApiRouters.signUp(),
             signUpModel.toJson(),
-            null,
             { response ->
                 val successStatus = response?.getBoolean("success") ?: false
 

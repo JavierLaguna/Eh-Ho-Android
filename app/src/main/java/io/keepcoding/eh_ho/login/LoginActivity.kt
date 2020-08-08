@@ -25,18 +25,9 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-//        val inputUserName: EditText = findViewById(R.id.input_username)
-//        val button: Button = findViewById(R.id.button_login)
-//
-//        button.setOnClickListener {
-//            Toast.makeText(it.context, "Welcome to Eh-Ho ${inputUserName.text}", Toast.LENGTH_LONG) .show()
-//        }
-
-//        if (savedInstanceState == null) {
         if (isFirstTimeCreated(savedInstanceState)) {
             checkSession()
         }
-//        }
     }
 
     private fun checkSession() {
@@ -61,10 +52,8 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
     }
 
     override fun onSignIn(signInModel: SignInModel) {
-        // showTopics()
-
         enableLoading()
-//        simulateLoading(signInModel.username)
+
         UserRepo.signIn(applicationContext, signInModel, {
             showTopics()
         }, { error ->
@@ -92,7 +81,6 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
 
     override fun onSignUp(signUpModel: SignUpModel) {
         enableLoading()
-//        simulateLoading("")
 
         UserRepo.signUp(applicationContext, signUpModel, {
             enableLoading(false)
@@ -111,38 +99,5 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
             fragmentContainer.visibility = View.VISIBLE
             viewLoading.visibility = View.INVISIBLE
         }
-    }
-
-    // El método más básico y antiguo
-    private fun simulateLoadingRunnable() {
-        val runnable = Runnable {
-            Thread.sleep(3000)
-
-            viewLoading.post { // Ejecutar en el hilo donde está "viewLoading"
-                showTopics()
-            }
-        }
-
-        Thread(runnable).start()
-    }
-
-    // Usando AsyncTask
-    private fun simulateLoading(signInModel: SignInModel) {
-        val task = object : AsyncTask<Long, Void, Boolean>() {
-
-            override fun doInBackground(vararg time: Long?): Boolean {
-                Thread.sleep(time[0] ?: 3000)
-                return true
-            }
-
-            override fun onPostExecute(result: Boolean?) {
-                super.onPostExecute(result)
-
-//                UserRepo.signIn(applicationContext, signInModel)
-                showTopics()
-            }
-        }
-
-        task.execute(5000)
     }
 }

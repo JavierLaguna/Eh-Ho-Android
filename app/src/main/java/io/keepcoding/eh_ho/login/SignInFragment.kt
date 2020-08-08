@@ -31,7 +31,6 @@ class SignInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        return inflater.inflate(R.layout.fragment_sign_in, container, false)
         return container?.inflate(R.layout.fragment_sign_in)
     }
 

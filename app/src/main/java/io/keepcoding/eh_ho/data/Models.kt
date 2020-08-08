@@ -7,7 +7,6 @@ import java.util.*
 data class Topic(
     val id: String = UUID.randomUUID().toString(),
     val title: String = "",
-//    val content: String,
     val date: Date = Date(),
     val posts: Int = 0,
     val views: Int = 0

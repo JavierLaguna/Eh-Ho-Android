@@ -17,7 +17,6 @@ class LoadingDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        return container?.inflate(R.layout.dialog_loading)
         return inflater.inflate(R.layout.dialog_loading, container, false)
     }
 

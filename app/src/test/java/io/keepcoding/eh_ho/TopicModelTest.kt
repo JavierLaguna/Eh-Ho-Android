@@ -14,7 +14,6 @@ class TopicModelTest {
         val dateToCompare: Date = formatDate("01/01/2020 10:00:00")
         val testTopic = Topic(
             title = "Test",
-//            content = "Content test",
             date = formatDate("01/01/2019 10:00:00")
         )
 

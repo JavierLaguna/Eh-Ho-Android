@@ -54,14 +54,7 @@ class TopicsFragment : Fragment() {
             topicsInteractionListener?.onCreateTopic()
         }
 
-//        val adapter = TopicsAdapter {
-////            goToPosts(it)
-//            topicsInteractionListener?.onShowPosts(it)
-//        }
-
-//        adapter.setTopics(TopicsRepo.topics)
-
-        topicsAdapter.setTopics(TopicsRepo.topics)
+//        topicsAdapter.setTopics(TopicsRepo.topics)
 
         listTopics.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -96,9 +89,8 @@ class TopicsFragment : Fragment() {
     private fun loadTopics() {
         context?.let {
             TopicsRepo.getTopics(it.applicationContext, {
-//                (listTopics.adapter as TopicsAdapter).setTopics(it)
-
                 topicsAdapter.setTopics(it)
+
             }, { error ->
                 // TODO: Manejo de errores
             })

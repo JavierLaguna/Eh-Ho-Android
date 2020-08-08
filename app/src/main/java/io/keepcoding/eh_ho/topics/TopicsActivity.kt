@@ -18,19 +18,6 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
 
-        Log.d(TopicsActivity::class.simpleName, TopicsRepo.topics.toString())
-
-        // val list: RecyclerView = findViewById(R.id.list_topics)
-        // list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-//        val adapter = TopicsAdapter {
-//            goToPosts(it)
-//        }
-//        adapter.setTopics(TopicsRepo.topics)
-//
-//        listTopics.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        listTopics.adapter = adapter
-
         if (isFirstTimeCreated(savedInstanceState)) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainer, TopicsFragment())

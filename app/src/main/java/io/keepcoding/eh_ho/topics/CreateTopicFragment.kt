@@ -9,6 +9,7 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.CreateTopicModel
 import io.keepcoding.eh_ho.data.RequestError
 import io.keepcoding.eh_ho.data.TopicsRepo
+import io.keepcoding.eh_ho.data.UserRepo
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_create_topic.*
 
@@ -57,13 +58,16 @@ class CreateTopicFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        context?.let {
+            labelAuthor.text = UserRepo.getUsername(it)
+        }
+    }
+
     private fun createTopic() {
         if (isFormValid()) {
-//            TopicsRepo.addTopic(inputTitle.text.toString(), inputContent.text.toString())
-
-//            fragmentManager?.popBackStack()
-//            createTopicInteractionListener?.onTopicCreated()
-
             postTopic()
         } else {
             showErrors()
@@ -89,10 +93,6 @@ class CreateTopicFragment : Fragment() {
 
     private fun enableLoadingDialog(enabled: Boolean = true) {
         if (enabled) {
-//            fragmentManager?.let {
-//                loadingDialogFragment.show(it, TAG_LOADING_DIALOG)
-//            }
-
             loadingDialogFragment.show(childFragmentManager, TAG_LOADING_DIALOG)
         } else {
             loadingDialogFragment.dismiss()

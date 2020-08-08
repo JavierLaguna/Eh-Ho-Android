@@ -9,16 +9,20 @@ class PostRequest(
     method: Int,
     url: String,
     body: JSONObject?,
-    private val username: String? = null,
     listener: (response: JSONObject?) -> Unit,
-    errorListener: (errorResponse: VolleyError) -> Unit
+    errorListener: (errorResponse: VolleyError) -> Unit,
+    private val username: String? = null,
+    private val useApiKey: Boolean = true
 ) : JsonObjectRequest(method, url, body, listener, errorListener) {
 
     override fun getHeaders(): MutableMap<String, String> {
         val headers = mutableMapOf<String, String>()
         headers["Content-Type"] = "application/json"
         headers["Accept"] = "application/json"
-        headers["Api-Key"] = BuildConfig.DiscourseApiKey
+
+        if (useApiKey) {
+            headers["Api-Key"] = BuildConfig.DiscourseApiKey
+        }
 
         username?.let {
             headers["Api-Username"] = it
