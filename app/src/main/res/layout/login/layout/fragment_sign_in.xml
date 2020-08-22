@@ -29,7 +29,6 @@
         android:text="@string/label_login"
         android:textColor="#fff"
         app:backgroundTint="@color/colorPrimary" />
-    <!--        android:onClick="showTopics" -->
 
     <TextView
         android:id="@+id/labelCreateAccount"

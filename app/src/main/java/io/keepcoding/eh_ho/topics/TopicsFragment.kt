@@ -56,6 +56,10 @@ class TopicsFragment : Fragment() {
             topicsInteractionListener?.onCreateTopic()
         }
 
+        buttonRetry.setOnClickListener {
+            retryLoadTopics()
+        }
+
         listTopics.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -93,19 +97,37 @@ class TopicsFragment : Fragment() {
                 topicsAdapter.setTopics(it)
                 enableLoading(false)
             }, { error ->
-                // TODO: Manejo de errores
+                showError()
             })
         }
     }
 
     private fun enableLoading(enabled: Boolean = true) {
         if (enabled) {
-            topicsContainer.visibility = View.INVISIBLE
+            listTopics.visibility = View.INVISIBLE
+            buttonCreate.visibility = View.INVISIBLE
             viewLoading.visibility = View.VISIBLE
         } else {
-            topicsContainer.visibility = View.VISIBLE
+            listTopics.visibility = View.VISIBLE
+            buttonCreate.visibility = View.VISIBLE
             viewLoading.visibility = View.INVISIBLE
         }
+    }
+
+    private fun showError(show: Boolean = true) {
+        if (show) {
+            viewError.visibility = View.VISIBLE
+            buttonCreate.visibility = View.VISIBLE
+            listTopics.visibility = View.INVISIBLE
+            viewLoading.visibility = View.INVISIBLE
+        } else {
+            viewError.visibility = View.GONE
+        }
+    }
+
+    private fun retryLoadTopics() {
+        showError(false)
+        loadTopics()
     }
 
     interface TopicsInteractionListener {
