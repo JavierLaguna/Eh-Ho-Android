@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.SignInModel
 import io.keepcoding.eh_ho.inflate
+import kotlinx.android.synthetic.main.fragment_create_topic.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import java.lang.IllegalArgumentException
 
@@ -42,12 +43,32 @@ class SignInFragment : Fragment() {
         }
 
         buttonLogin.setOnClickListener {
+            signIn()
+        }
+    }
+
+    private fun signIn() {
+        if (isFormValid()) {
             val signInModel =
                 SignInModel(
                     inputUsername.text.toString(),
                     inputPassword.text.toString()
                 )
             signInInteractionListener?.onSignIn(signInModel)
+        } else {
+            showErrors()
+        }
+    }
+
+    private fun isFormValid() = inputUsername.text.isNotEmpty() && inputPassword.text.isNotEmpty()
+
+    private fun showErrors() {
+        if (inputUsername.text.isEmpty()) {
+            inputUsername.error = getString(R.string.error_empty)
+        }
+
+        if (inputPassword.text.isEmpty()) {
+            inputPassword.error = getString(R.string.error_empty)
         }
     }
 

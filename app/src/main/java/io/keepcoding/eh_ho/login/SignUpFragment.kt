@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.SignUpModel
 import io.keepcoding.eh_ho.inflate
+import kotlinx.android.synthetic.main.fragment_create_topic.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import java.lang.IllegalArgumentException
 
@@ -38,18 +39,53 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         buttonSignUp.setOnClickListener {
-            val signUpModel = SignUpModel(
-                inputUsername.text.toString(),
-                inputEmail.text.toString(),
-                inputPassword.text.toString()
-            )
-            signUpInteractionListener?.onSignUp(signUpModel)
+            signUp()
         }
 
         labelCreateAccount.setOnClickListener {
             signUpInteractionListener?.onGoToSignIn()
         }
     }
+
+    private fun signUp() {
+        if (isFormValid()) {
+            val signUpModel = SignUpModel(
+                inputUsername.text.toString(),
+                inputEmail.text.toString(),
+                inputPassword.text.toString()
+            )
+            signUpInteractionListener?.onSignUp(signUpModel)
+        } else {
+            showErrors()
+        }
+    }
+
+    private fun isFormValid() = inputUsername.text.isNotEmpty() &&
+            inputEmail.text.isNotEmpty() &&
+            inputPassword.text.isNotEmpty() &&
+            inputConfirmPassword.text.isNotEmpty() &&
+            inputPassword.text.toString() == inputConfirmPassword.text.toString()
+
+    private fun showErrors() {
+        if (inputUsername.text.isEmpty()) {
+            inputUsername.error = getString(R.string.error_empty)
+        }
+
+        if (inputEmail.text.isEmpty()) {
+            inputEmail.error = getString(R.string.error_empty)
+        }
+
+        if (inputPassword.text.isEmpty()) {
+            inputPassword.error = getString(R.string.error_empty)
+        }
+
+        if (inputConfirmPassword.text.isEmpty()) {
+            inputConfirmPassword.error = getString(R.string.error_empty)
+        } else if (inputPassword.text.toString() != inputConfirmPassword.text.toString()) {
+            inputConfirmPassword.error = getString(R.string.error_mismatch_password)
+        }
+    }
+
 
     interface SignUpInteractionListener {
         fun onGoToSignIn()

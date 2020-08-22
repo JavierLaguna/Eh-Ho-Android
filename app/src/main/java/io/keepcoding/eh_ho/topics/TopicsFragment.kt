@@ -54,8 +54,6 @@ class TopicsFragment : Fragment() {
             topicsInteractionListener?.onCreateTopic()
         }
 
-//        topicsAdapter.setTopics(TopicsRepo.topics)
-
         listTopics.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
