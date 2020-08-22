@@ -10,7 +10,9 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.Topic
 import io.keepcoding.eh_ho.data.TopicsRepo
 import io.keepcoding.eh_ho.inflate
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_topics.*
+import kotlinx.android.synthetic.main.fragment_topics.viewLoading
 import java.lang.IllegalArgumentException
 
 class TopicsFragment : Fragment() {
@@ -86,12 +88,23 @@ class TopicsFragment : Fragment() {
 
     private fun loadTopics() {
         context?.let {
+            enableLoading()
             TopicsRepo.getTopics(it.applicationContext, {
                 topicsAdapter.setTopics(it)
-
+                enableLoading(false)
             }, { error ->
                 // TODO: Manejo de errores
             })
+        }
+    }
+
+    private fun enableLoading(enabled: Boolean = true) {
+        if (enabled) {
+            topicsContainer.visibility = View.INVISIBLE
+            viewLoading.visibility = View.VISIBLE
+        } else {
+            topicsContainer.visibility = View.VISIBLE
+            viewLoading.visibility = View.INVISIBLE
         }
     }
 

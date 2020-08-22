@@ -6,19 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".topics.TopicsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listTopics"
+    <include
+        android:id="@+id/viewLoading"
+        layout="@layout/view_loading"
+        android:visibility="invisible" />
+
+    <FrameLayout
+        android:id="@+id/topicsContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="32dp"
-        app:srcCompat="@drawable/ic_add" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listTopics"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            app:srcCompat="@drawable/ic_add" />
+    </FrameLayout>
 </FrameLayout>
