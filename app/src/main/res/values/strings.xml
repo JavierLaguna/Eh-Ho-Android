@@ -49,5 +49,6 @@
     <string name="label_creating_topic">Creating topic</string>
     <string name="error_get_topics">Oops something bad happened</string>
     <string name="label_retry">Retry</string>
+    <string name="label_post_author">Author</string>
 
 </resources>
