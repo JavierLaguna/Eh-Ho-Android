@@ -1,9 +1,7 @@
 package io.keepcoding.eh_ho.posts
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.keepcoding.eh_ho.R
@@ -19,6 +17,12 @@ class PostsFragment(val topicId: String) : Fragment() {
     private val postsAdapter: PostsAdapter by lazy {
         val adapter = PostsAdapter()
         adapter
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -44,6 +48,18 @@ class PostsFragment(val topicId: String) : Fragment() {
         super.onResume()
 
         loadPosts()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_create_post, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_create_post -> loadPosts()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun loadPosts() {
