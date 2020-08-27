@@ -12,6 +12,7 @@ import io.keepcoding.eh_ho.data.TopicsRepo
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_topics.*
 import kotlinx.android.synthetic.main.fragment_topics.viewLoading
+import kotlinx.android.synthetic.main.view_error.*
 import java.lang.IllegalArgumentException
 
 class TopicsFragment : Fragment() {
@@ -95,7 +96,7 @@ class TopicsFragment : Fragment() {
             TopicsRepo.getTopics(it.applicationContext, {
                 topicsAdapter.setTopics(it)
                 enableLoading(false)
-            }, { error ->
+            }, {
                 showError()
             })
         }
@@ -120,7 +121,7 @@ class TopicsFragment : Fragment() {
             listTopics.visibility = View.INVISIBLE
             viewLoading.visibility = View.INVISIBLE
         } else {
-            viewError.visibility = View.GONE
+            viewError.visibility = View.INVISIBLE
         }
     }
 

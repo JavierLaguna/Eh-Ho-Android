@@ -10,6 +10,9 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.PostsRepo
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_posts.*
+import kotlinx.android.synthetic.main.fragment_posts.viewError
+import kotlinx.android.synthetic.main.fragment_posts.viewLoading
+import kotlinx.android.synthetic.main.view_error.*
 
 class PostsFragment(val topicId: String) : Fragment() {
 
@@ -31,6 +34,10 @@ class PostsFragment(val topicId: String) : Fragment() {
         listPosts.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listPosts.adapter = postsAdapter
+
+        buttonRetry.setOnClickListener {
+            retryLoadPosts()
+        }
     }
 
     override fun onResume() {
@@ -41,22 +48,39 @@ class PostsFragment(val topicId: String) : Fragment() {
 
     private fun loadPosts() {
         context?.let {
-            // enableLoading()
+            enableLoading()
 
             PostsRepo.getPosts(it.applicationContext, topicId, {
                 postsAdapter.setPosts(it)
                 enableLoading(false)
-            }, { error ->
-                // TODO:
+            }, {
+                showError()
             })
         }
     }
 
     private fun enableLoading(enabled: Boolean = true) {
         if (enabled) {
-
+            listPosts.visibility = View.INVISIBLE
+            viewLoading.visibility = View.VISIBLE
         } else {
-
+            listPosts.visibility = View.VISIBLE
+            viewLoading.visibility = View.INVISIBLE
         }
+    }
+
+    private fun showError(show: Boolean = true) {
+        if (show) {
+            viewError.visibility = View.VISIBLE
+            listPosts.visibility = View.INVISIBLE
+            viewLoading.visibility = View.INVISIBLE
+        } else {
+            viewError.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun retryLoadPosts() {
+        showError(false)
+        loadPosts()
     }
 }
