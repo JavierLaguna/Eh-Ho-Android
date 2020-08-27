@@ -19,7 +19,8 @@ object PostsRepo {
             ApiRouters.getPosts(topicId),
             null,
             { response ->
-                val a = ""
+                val list = Post.parsePostsList(response)
+                onSuccess(list)
             },
             {
                 it.printStackTrace()

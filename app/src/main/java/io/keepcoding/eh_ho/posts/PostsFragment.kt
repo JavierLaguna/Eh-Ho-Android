@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.PostsRepo
-import io.keepcoding.eh_ho.data.TopicsRepo
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_posts.*
 
@@ -32,7 +30,6 @@ class PostsFragment(val topicId: String) : Fragment() {
 
         listPosts.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        listPosts.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         listPosts.adapter = postsAdapter
     }
 
@@ -44,13 +41,22 @@ class PostsFragment(val topicId: String) : Fragment() {
 
     private fun loadPosts() {
         context?.let {
-//            enableLoading()
+            // enableLoading()
 
             PostsRepo.getPosts(it.applicationContext, topicId, {
-
+                postsAdapter.setPosts(it)
+                enableLoading(false)
             }, { error ->
-
+                // TODO:
             })
+        }
+    }
+
+    private fun enableLoading(enabled: Boolean = true) {
+        if (enabled) {
+
+        } else {
+
         }
     }
 }
