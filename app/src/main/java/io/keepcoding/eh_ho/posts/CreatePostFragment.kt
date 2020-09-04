@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_create_post.*
 
 const val TAG_LOADING_DIALOG_CREATING_POST = "loading_dialog_creating_post"
 
-class CreatePostFragment(val topicId: String) : Fragment() {
+class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment() {
 
     var createPostInteractionListener: CreatePostInteractionListener? = null
     val loadingDialogFragment: LoadingDialogFragment by lazy {
@@ -56,6 +56,12 @@ class CreatePostFragment(val topicId: String) : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        labelTopicTitle.text = topicTitle
     }
 
     private fun createPost() {

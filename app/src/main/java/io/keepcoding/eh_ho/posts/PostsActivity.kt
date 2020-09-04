@@ -6,6 +6,7 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.isFirstTimeCreated
 
 const val EXTRA_TOPIC_ID = "TOPIC_ID"
+const val EXTRA_TOPIC_TITLE = "TOPIC_TITLE"
 const val TRANSACTION_CREATE_POST = "create_post"
 
 class PostsActivity : AppCompatActivity(), PostsFragment.PostsInteractionListener,
@@ -26,9 +27,10 @@ class PostsActivity : AppCompatActivity(), PostsFragment.PostsInteractionListene
     // PostsInteractionListener
     override fun onCreatePost() {
         val topicId = intent.getStringExtra(EXTRA_TOPIC_ID) ?: ""
+        val topicTitle = intent.getStringExtra(EXTRA_TOPIC_TITLE) ?: ""
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, CreatePostFragment(topicId))
+            .replace(R.id.fragmentContainer, CreatePostFragment(topicId, topicTitle))
             .addToBackStack(TRANSACTION_CREATE_POST)
             .commit()
     }
