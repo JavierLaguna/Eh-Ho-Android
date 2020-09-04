@@ -9,8 +9,6 @@
     <string name="label_sign_up">Sign up</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="label_sign_in">Sign in</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hint_title">Title</string>
     <string name="hint_content">Content</string>
     <string name="hint_author">Author</string>
@@ -51,5 +49,6 @@
     <string name="label_retry">Retry</string>
     <string name="label_post_author">Author</string>
     <string name="label_create_post">Create post</string>
+    <string name="label_creating_post">Creating post</string>
 
 </resources>
