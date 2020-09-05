@@ -9,6 +9,7 @@ import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.PostsRepo
 import io.keepcoding.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_posts.*
+import kotlinx.android.synthetic.main.fragment_posts.swipeRefresh
 import kotlinx.android.synthetic.main.fragment_posts.viewError
 import kotlinx.android.synthetic.main.fragment_posts.viewLoading
 import kotlinx.android.synthetic.main.view_error.*
@@ -56,6 +57,10 @@ class PostsFragment(val topicId: String) : Fragment() {
         buttonRetry.setOnClickListener {
             retryLoadPosts()
         }
+
+        swipeRefresh.setOnRefreshListener {
+            loadPosts()
+        }
     }
 
     override fun onResume() {
@@ -83,7 +88,9 @@ class PostsFragment(val topicId: String) : Fragment() {
             PostsRepo.getPosts(it.applicationContext, topicId, {
                 postsAdapter.setPosts(it)
                 enableLoading(false)
+                swipeRefresh.isRefreshing = false
             }, {
+                swipeRefresh.isRefreshing = false
                 showError()
             })
         }
