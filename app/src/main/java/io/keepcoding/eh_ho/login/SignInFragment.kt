@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.SignInModel
 import io.keepcoding.eh_ho.inflate
-import kotlinx.android.synthetic.main.fragment_create_topic.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import java.lang.IllegalArgumentException
 
