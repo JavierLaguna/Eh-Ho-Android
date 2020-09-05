@@ -60,6 +60,10 @@ class TopicsFragment : Fragment() {
             retryLoadTopics()
         }
 
+        swipeRefresh.setOnRefreshListener {
+            loadTopics()
+        }
+
         listTopics.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -96,7 +100,9 @@ class TopicsFragment : Fragment() {
             TopicsRepo.getTopics(it.applicationContext, {
                 topicsAdapter.setTopics(it)
                 enableLoading(false)
+                swipeRefresh.isRefreshing = false
             }, {
+                swipeRefresh.isRefreshing = false
                 showError()
             })
         }

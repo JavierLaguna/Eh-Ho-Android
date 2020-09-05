@@ -45,6 +45,12 @@ class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment
         return container?.inflate(R.layout.fragment_create_post)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        labelTopicTitle.text = topicTitle
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_create_topic, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -56,12 +62,6 @@ class CreatePostFragment(val topicId: String, val topicTitle: String) : Fragment
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        labelTopicTitle.text = topicTitle
     }
 
     private fun createPost() {
